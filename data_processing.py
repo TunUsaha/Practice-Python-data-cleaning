@@ -1,4 +1,6 @@
 import pandas as pd
+
+
 import matplotlib.pyplot as plt
 from tkinter import Tk
 from tkinter.filedialog import askopenfilename
@@ -67,5 +69,4 @@ if __name__ == "__main__":
         cleaned_data = clean_data(data)
         print("ข้อมูลหลังการทำความสะอาด:")
         print(cleaned_data.head())
-
         create_graph(cleaned_data)
