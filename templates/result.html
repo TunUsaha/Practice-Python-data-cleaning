@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Result</title>
+</head>
+<body class="result-page">
+    <header>
+        <div class="container">
+            <h1>Welcome to My Website</h1>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('index') }}">Home</a></li>
+                    <li><a href="{{ url_for('tool') }}">Data Cleaning Tool</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <h1>Cleaned Data</h1>
+        <div class="cleaned-data">{{ cleaned_data|safe }}</div>
+
+        <h2>Data Distribution Graph</h2>
+        <img src="{{ url_for('static', filename='graph.png') }}" alt="Data Distribution Graph" class="data-graph">
+        <br>
+        <a href="javascript:void(0);" class="back-link" onclick="history.back()">Go Back</a>
+    </main>
+</body>
+</html>
