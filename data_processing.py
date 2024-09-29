@@ -1,12 +1,21 @@
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
+import matplotlib.pyplot as plt
+import seaborn as sns
 
+def plot_data_distribution(data, column):
+    plt.figure(figsize=(10, 6))
+    sns.histplot(data[column], kde=True)
+    plt.title(f'Distribution of {column}')
+    plt.xlabel(column)
+    plt.ylabel('Frequency')
+    plt.grid()
+    plt.show()
 
 def load_data(file_path):
     """Load data from a CSV file."""
     data = pd.read_csv(file_path)
     return data
-
 
 def inspect_data(data):
     """Inspect data and print basic information."""
@@ -19,16 +28,10 @@ def inspect_data(data):
     print("\nMissing Values:")
     print(data.isnull().sum())
 
-
-
 def handle_missing_values(data):
     """Handle missing values by dropping rows or filling them."""
-    # Drop rows with missing values
     data_cleaned = data.dropna()
-    # Alternatively, fill missing values with median
-    # data_cleaned = data.fillna(data.median())
     return data_cleaned
-
 
 def standardize_data(data, numeric_columns):
     """Standardize numerical columns."""
@@ -36,12 +39,10 @@ def standardize_data(data, numeric_columns):
     data[numeric_columns] = scaler.fit_transform(data[numeric_columns])
     return data
 
-
 def save_data(data, file_path):
     """Save processed data to a CSV file."""
     data.to_csv(file_path, index=False)
     print(f"Processed data saved to {file_path}")
-
 
 def main():
     # Step 1: Load data
@@ -72,8 +73,9 @@ def main():
     # Step 6: Save the cleaned data
     save_data(data_standardized, 'cleaned_student_dataset.csv')
 
+    # Step 7: Plot data distribution for numeric columns
+    for col in numeric_columns:
+        plot_data_distribution(data_cleaned, col)
 
 if __name__ == "__main__":
     main()
-
-
