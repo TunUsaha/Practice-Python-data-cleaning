@@ -1,24 +1,41 @@
 import pandas as pd
-from sklearn.preprocessing import StandardScaler
-import matplotlib.pyplot as plt
+import numpy as np
 import seaborn as sns
+import matplotlib.pyplot as plt
 
-def plot_data_distribution(data, column):
-    plt.figure(figsize=(10, 6))
-    sns.histplot(data[column], kde=True)
-    plt.title(f'Distribution of {column}')
-    plt.xlabel(column)
-    plt.ylabel('Frequency')
-    plt.grid()
-    plt.show()
 
-def load_data(file_path):
-    """Load data from a CSV file."""
-    data = pd.read_csv(file_path)
+def clean_data(data):
+    # Drop the `ethnic.group` column
+    data.drop(columns=['ethnic.group'], inplace=True)
+
+    # Fill missing values in numeric columns with their median
+    for column in data.select_dtypes(include=[np.number]).columns:
+        data[column] = data[column].fillna(data[column].median())
+
     return data
 
-def inspect_data(data):
-    """Inspect data and print basic information."""
+
+def plot_correlation_heatmap(data):
+    # Select only numeric columns for correlation matrix
+    correlation_matrix = data.select_dtypes(include=[np.number]).corr()
+
+    # Set up the matplotlib figure
+    plt.figure(figsize=(10, 8))
+
+    # Create a heatmap with annotations
+    sns.heatmap(correlation_matrix, annot=True, fmt=".2f", cmap='coolwarm', square=True)
+
+    # Add titles and labels
+    plt.title('Correlation Heatmap', fontsize=18)
+    plt.show()
+
+
+# Main function
+def main():
+    # Load data
+    data = pd.read_csv('student-dataset.csv')
+
+    # Show initial data overview
     print("Data Overview:")
     print(data.head())
     print("\nColumn Names:")
@@ -28,54 +45,26 @@ def inspect_data(data):
     print("\nMissing Values:")
     print(data.isnull().sum())
 
-def handle_missing_values(data):
-    """Handle missing values by dropping rows or filling them."""
-    data_cleaned = data.dropna()
-    return data_cleaned
+    # Clean data
+    data_cleaned = clean_data(data)
 
-def standardize_data(data, numeric_columns):
-    """Standardize numerical columns."""
-    scaler = StandardScaler()
-    data[numeric_columns] = scaler.fit_transform(data[numeric_columns])
-    return data
-
-def save_data(data, file_path):
-    """Save processed data to a CSV file."""
-    data.to_csv(file_path, index=False)
-    print(f"Processed data saved to {file_path}")
-
-def main():
-    # Step 1: Load data
-    data = load_data('student-dataset.csv')
-
-    # Step 2: Inspect data
-    inspect_data(data)
-
-    # Step 3: Handle missing values
-    data_cleaned = handle_missing_values(data)
-
-    # Step 4: Print the cleaned data to check if it is empty
-    print("Cleaned Data Overview:")
+    # Show cleaned data overview
+    print("\nCleaned Data Overview:")
     print(data_cleaned.head())
-    print("Cleaned Data Info:")
+    print("\nCleaned Data Info:")
     print(data_cleaned.info())
 
-    # Check if the data is empty
-    if data_cleaned.empty:
-        print("No data available after cleaning.")
-        return  # Exit the main function if the data is empty
+    # Save cleaned data
+    data_cleaned.to_csv('cleaned_student_dataset.csv', index=False)
+    print("Processed data saved to cleaned_student_dataset.csv")
 
-    # Step 5: Standardize numerical columns
-    numeric_columns = ['age', 'english.grade', 'math.grade', 'sciences.grade', 'language.grade', 'portfolio.rating',
-                       'coverletter.rating', 'refletter.rating']
-    data_standardized = standardize_data(data_cleaned, numeric_columns)
+    # Descriptive statistics
+    print("\nDescriptive Statistics:")
+    print(data_cleaned.describe())
 
-    # Step 6: Save the cleaned data
-    save_data(data_standardized, 'cleaned_student_dataset.csv')
+    # Plot correlation heatmap
+    plot_correlation_heatmap(data_cleaned)
 
-    # Step 7: Plot data distribution for numeric columns
-    for col in numeric_columns:
-        plot_data_distribution(data_cleaned, col)
 
 if __name__ == "__main__":
     main()
