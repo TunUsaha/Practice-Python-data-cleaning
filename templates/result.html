@@ -3,28 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMK0p4D4G7S5q6/sY6JrVYhPCfC3iMhlL6c2Qi" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <title>Result</title>
 </head>
+<header>
+    <div class="container">
+        <h1>Welcome to My Website</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('tool') }}">Data Cleansing Tool</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
 <body class="result-page">
-    <header>
-        <div class="container">
-            <h1>Welcome to My Website</h1>
-            <nav>
-                <ul>
-                    <li><a href="{{ url_for('index') }}">Home</a></li>
-                    <li><a href="{{ url_for('tool') }}">Data Cleansing Tool</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-
-    <main class=main-tool">
+    <main class="main-tool">
         <h1 class="main-title-result">Cleaned Data</h1>
         <div class="cleaned-data">{{ cleaned_data|safe }}</div>
 
         <h2>Data Distribution Graph</h2>
-        <img src="{{ url_for('static', filename='graph.png') }}" alt="Data Distribution Graph" class="data-graph">
+        <img src="{{ graph_path }}" alt="Data Distribution Graph" class="data-graph">
+
+        <h2 class="analysis-title">Basic Analysis Results</h2>
+        <div class="analysis-results">
+          <h3 class="results-section-title">Statistics</h3>
+<table class="result-table">
+    <thead>
+        <tr>
+            <th>Feature</th>
+            <th>Count</th>
+            <th>Mean</th>
+            <th>Std Dev</th>
+            <th>Min</th>
+            <th>25%</th>
+            <th>50%</th>
+            <th>75%</th>
+            <th>Max</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for feature, stats in stats.items() %}  <!-- แก้เป็น 'stats' -->
+        <tr>
+            <td>{{ feature }}</td>
+            <td>{{ stats['count'] }}</td>
+            <td>{{ stats['mean'] }}</td>
+            <td>{{ stats['std'] }}</td>
+            <td>{{ stats['min'] }}</td>
+            <td>{{ stats['25%'] }}</td>
+            <td>{{ stats['50%'] }}</td>
+            <td>{{ stats['75%'] }}</td>
+            <td>{{ stats['max'] }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+            <h3 class="results-section-title">Correlation</h3>
+<table class="result-table">
+    <thead>
+        <tr>
+            <th>Feature</th>
+            <th>Correlation with Other Features</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for feature, correlations in correlation.items() %}
+        <tr>
+            <td>{{ feature }}</td>
+            <td>
+                <ul>
+                    {% for other_feature, corr_value in correlations.items() %}
+                    <li>{{ other_feature }}: {{ corr_value }}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</table>
+        </div>
+        <h2 class="download-title">Download Cleaned Data</h2>
+       <a href="{{ url_for('save_data', filename='cleaned_data.csv') }}" class="download-link">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="24" height="24" aria-hidden="true"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 242.7-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7 288 32zM64 352c-35.3 0-64 28.7-64 64l0 32c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-32c0-35.3-28.7-64-64-64l-101.5 0-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352 64 352zm368 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"/></svg>
+    Download Cleaned Data
+</a>
         <br>
         <a href="javascript:void(0);" class="back-link" onclick="history.back()">Go Back</a>
     </main>

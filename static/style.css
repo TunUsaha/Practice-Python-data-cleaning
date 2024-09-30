@@ -461,46 +461,125 @@ html, body {
     margin-bottom: 30px;
     margin-top: 20px;
 }
-
 .result-page {
     background-color: var(--secondary-color);
     color: var(--text-color);
+    padding: 0 2rem 2rem; /* เพิ่ม padding ซ้าย ขวา และล่าง */
 }
 
 .result-page .main-title-result {
     font-size: 2rem;
     font-weight: 600;
     text-align: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem; /* ปรับให้มีระยะห่างมากขึ้น */
 }
 
 .result-page h2 {
     font-size: 1.5rem;
     font-weight: 500;
     text-align: center;
-    margin: 2rem 0 1rem;
+    margin: 1.5rem 0; /* ลด margin ด้านบนและด้านล่าง */
 }
 
 .cleaned-data {
     max-width: 90%;
-    margin: 0 auto;
+    margin: 1rem auto; /* ปรับระยะห่างเพื่อให้ดูมีพื้นที่ */
     background-color: #fff;
     border-radius: 10px;
-    padding: 1.5rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 2rem; /* เพิ่ม padding เพื่อให้เนื้อหาดูโปร่ง */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* ปรับความเข้มของเงา */
     overflow-x: auto; /* allows horizontal scrolling for wide tables */
 }
 
 .data-graph {
     display: block;
-    margin: 0 auto;
+    margin: 2rem auto; /* เพิ่มระยะห่างด้านบนและด้านล่าง */
     max-width: 100%;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
+/* Title Styles */
+.analysis-title {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-weight: 600;
+    text-align: center;
+    margin: 2rem 0 1rem;
+}
+
+.download-title {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-weight: 600;
+    text-align: center;
+    margin: 2rem 0;
+    padding: 0.625rem 1.25rem;
+}
+
+/* Analysis Results Styles */
+.analysis-results {
+    background-color: var(--secondary-color);
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    padding: 1.5rem; /* เพิ่ม padding */
+    margin: 1.5rem 0; /* ปรับ margin */
+}
+
+.result-table{
+     width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background-color: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+    margin-top: 20px;
+}
+
+.results-section-title {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin-bottom: 1rem; /* เพิ่มระยะห่างด้านล่าง */
+    text-align: center;
+}
+
+/* Results Data Styles */
+.results-data {
+    font-family: monospace; /* Use a monospace font for code-like display */
+    background-color: #f9f9f9; /* Light background for contrast */
+    padding: 0.625rem;
+    border-radius: 0.25rem;
+    overflow-x: auto; /* Enable horizontal scrolling for long lines */
+}
+
+/* Download Link Styles */
+.download-link {
+    display: inline-flex; /* ใช้ inline-flex เพื่อให้ icon และข้อความจัดอยู่ในแถวเดียวกัน */
+    align-items: center; /* จัดตำแหน่งให้ icon และข้อความอยู่กลาง */
+    background-color: var(--primary-color);
+    color: #fff;
+    padding: 0.75rem 1.5rem; /* เพิ่ม padding */
+    border-radius: 5px; /* ปรับให้มุมกลมขึ้น */
+    text-decoration: none;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.download-link svg {
+    margin-right: 0.5rem; /* เพิ่มระยะห่างระหว่าง icon กับข้อความ */
+    fill: white; /* เปลี่ยนสีของ icon ให้เป็นสีขาว */
+    width: 24px; /* กำหนดความกว้างของ icon */
+    height: 24px; /* กำหนดความสูงของ icon */
+}
+
+.download-link:hover {
+    background-color: var(--primary-hover-color);
+}
+
+/* Back Link Styles */
 .back-link {
-    margin: 2rem 2%; /* หรือระบุขนาดตามที่ต้องการ */
+    display: inline-block; /* ทำให้เป็นบล็อก */
+    margin: 2rem 0; /* ระยะห่างจากเนื้อหาอื่น */
     padding: 0.75rem 1.5rem;
     background-color: var(--primary-color);
     color: white;
@@ -509,7 +588,6 @@ html, body {
     text-align: center;
     transition: background-color 0.3s;
 }
-
 
 .back-link:hover {
     background-color: var(--primary-hover-color);
