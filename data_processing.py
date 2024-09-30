@@ -1,13 +1,11 @@
 import pandas as pd
-
-
 import matplotlib.pyplot as plt
 from tkinter import Tk
 from tkinter.filedialog import askopenfilename
 
 # ฟังก์ชันสำหรับเลือกไฟล์ .csv
 def select_csv_file():
-    Tk().withdraw()  # ซ่อนหน้าต่าง Tkinter
+    Tk().withdraw()
     filename = askopenfilename(filetypes=[("CSV files", "*.csv")])
     return filename
 
@@ -43,7 +41,7 @@ def clean_data(df):
 # ฟังก์ชันสำหรับสร้างกราฟ
 def create_graph(df):
     # สร้างกราฟ histogram ของแต่ละคอลัมน์ใน dataframe
-    num_columns = df.select_dtypes(include=['float64', 'int64']).columns  # เลือกเฉพาะคอลัมน์ที่เป็นตัวเลข
+    num_columns = df.select_dtypes(include=['float64', 'int64']).columns
     df[num_columns].hist(figsize=(12, 10), color='skyblue', edgecolor='black', bins=15)
 
     # เพิ่ม Title, ชื่อแกน และรูปแบบกราฟให้ดูเป็นทางการ

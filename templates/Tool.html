@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <title>Data Cleaning Tool</title>
+    <title>Data Cleansing Tool</title>
 </head>
 <body class="data-cleaning-tool">
     <header>
@@ -13,20 +13,31 @@
             <nav>
                 <ul>
                     <li><a href="{{ url_for('index') }}">Home</a></li>
-                    <li><a href="{{ url_for('tool') }}">Data Cleaning Tool</a></li>
+                    <li><a href="{{ url_for('tool') }}">Data Cleansing Tool</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <main>
-        <h1>Upload CSV File for Data Cleaning</h1>
+    <main class="main-tool">
+        <h1 class="main-title">Upload CSV File for Data Cleaning</h1>
         <form action="/tool" method="post" enctype="multipart/form-data">  <!-- ใช้ action="/tool" -->
             <input type="file" name="file" required>
             <h3>Choose Data Cleaning Method:</h3>
-            <input type="radio" name="cleaning_method" value="1" required> Drop rows with NaN<br>
-            <input type="radio" name="cleaning_method" value="2"> Fill NaN with Mean<br>
-            <input type="radio" name="cleaning_method" value="3"> Fill NaN with Median<br>
+            <table class="tool-table">
+            <tr>
+                <td>Drop rows with NaN</td>
+                <td><input type="radio" name="cleaning_method" value="1" required></td>
+            </tr>
+            <tr>
+                <td>Fill NaN with Mean</td>
+                <td><input type="radio" name="cleaning_method" value="2"> </td>
+            </tr>
+            <tr>
+                <td>Fill NaN with Median</td>
+                <td><input type="radio" name="cleaning_method" value="3"></td>
+            </tr>
+            </table>
             <button type="submit">Upload</button>
         </form>
     </main>

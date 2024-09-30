@@ -13,14 +13,14 @@
             <nav>
                 <ul>
                     <li><a href="{{ url_for('index') }}">Home</a></li>
-                    <li><a href="{{ url_for('tool') }}">Data Cleaning Tool</a></li>
+                    <li><a href="{{ url_for('tool') }}">Data Cleansing Tool</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <main>
-        <h1>Cleaned Data</h1>
+    <main class=main-tool">
+        <h1 class="main-title-result">Cleaned Data</h1>
         <div class="cleaned-data">{{ cleaned_data|safe }}</div>
 
         <h2>Data Distribution Graph</h2>
